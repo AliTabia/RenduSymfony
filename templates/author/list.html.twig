@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des auteurs{% endblock %}
+
+{% block body %}
+<h1>Liste des auteurs</h1>
+
+<!-- Search Form -->
+<form method="get" action="{{ path('search_authors') }}" class="mb-3">
+    <div class="row">
+        <div class="col-md-5">
+            <input type="number" name="min_books" placeholder="Min books" class="form-control" value="{{ min_books ?? '' }}">
+        </div>
+        <div class="col-md-5">
+            <input type="number" name="max_books" placeholder="Max books" class="form-control" value="{{ max_books ?? '' }}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for author in authors %}
+        <tr>
+            <td>{{ author.id }}</td>
+            <td>{{ author.username }}</td>
+            <td>{{ author.email }}</td>
+            <td>
+                <a href="{{ path('edit_author', {id: author.id}) }}" class="btn btn-primary">Modifier</a>
+                <form action="{{ path('delete_author', {id: author.id}) }}" method="post" style="display:inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet auteur ?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ author.id) }}">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">Aucun auteur trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('add_author') }}" class="btn btn-success">Ajouter un nouvel auteur</a>
+<a href="{{ path('delete_authors_no_books') }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer tous les auteurs sans livres ?');">Supprimer les auteurs sans livres</a>
+{% endblock %}

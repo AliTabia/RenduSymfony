@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres publiés{% endblock %}
+
+{% block body %}
+<h1>Liste des livres publiés</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Catégorie</th>
+            <th>Publiée</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author.username }}</td>
+            <td>{{ book.category }}</td>
+            <td>{{ book.isPublished ? 'Oui' : 'Non' }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">Aucun livre trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

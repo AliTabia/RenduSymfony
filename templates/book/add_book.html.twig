@@ -1,0 +1,15 @@
+{# templates/book/add_book.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un livre{% endblock %}
+
+{% block body %}
+<h1>Ajouter un livre</h1>
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success">Ajouter</button>
+{{ form_end(form) }}
+
+{% endblock %}

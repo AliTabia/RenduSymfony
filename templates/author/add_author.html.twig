@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Add a New Author</h1>
+
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.username) }}
+            {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.username) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.email) }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Author</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('list_authors') }}" class="btn btn-secondary">Back to List</a>
+{% endblock %}

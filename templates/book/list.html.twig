@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres{% endblock %}
+
+{% block body %}
+<h1>Liste des livres</h1>
+
+{% if books is empty %}
+    <p>No Books found</p>
+{% else %}
+    <p>Nombre de livres publiés : {{ publishedCount }}</p>
+    <p>Nombre de livres non publiés : {{ unpublishedCount }}</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Date de publication</th>
+                <th>Auteur</th>
+                <th>Catégorie</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.publicationDate ? book.publicationDate|date('Y-m-d') : 'Non publié' }}</td>
+                <td>{{ book.author.username }}</td>
+                <td>{{ book.category }}</td>
+                <td>
+                    <a href="{{ path('show_book', {id: book.id}) }}" class="btn btn-info">Show</a> <!-- Link to show details -->
+                    <a href="{{ path('edit_book', {id: book.id}) }}" class="btn btn-primary">Modifier</a>
+                    <form action="{{ path('delete_book', {id: book.id}) }}" method="post" style="display:inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ book.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<a href="{{ path('add_book') }}" class="btn btn-success">Ajouter un nouveau livre</a>
+
+{% endblock %}

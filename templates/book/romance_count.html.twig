@@ -1,0 +1,11 @@
+{# templates/book/romance_count.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Nombre de livres Romance{% endblock %}
+
+{% block body %}
+<h1>Nombre de livres dans la catégorie "Romance"</h1>
+<p>Il y a {{ romanceCount }} livres dans la catégorie "Romance".</p>
+<a href="{{ path('list_books') }}" class="btn btn-primary">Retour à la liste des livres</a>
+{% endblock %}
